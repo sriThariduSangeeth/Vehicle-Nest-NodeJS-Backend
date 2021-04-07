@@ -17,9 +17,12 @@
 </ul>
 
 <p float="left">
-<img src="https://nodejs.org/static/images/logo.svg" alt="Node" height="27">
-<img src="https://jwt.io/img/pic_logo.svg" alt="jet" height="27">
-<img src="https://nestjs.com/img/logo_text.svg" alt="jet" height="27">
+    <img src="https://nodejs.org/static/images/logo.svg" alt="Node" height="30">
+    <img src="https://jwt.io/img/pic_logo.svg" alt="jet" height="30">
+    <img src="https://nestjs.com/img/logo_text.svg" alt="jet" height="30">
+    <img src="https://www.postgresql.org/media/img/about/press/elephant.png" alt="jet" height="30">
+    <img src="https://cdn.rawgit.com/graphile/graphile.github.io/a6225f8c3052df5c276ecef28aeb0cade1aec16a/logos/postgraphile.optimized.svg" alt="jet" height="30">
+    <img src="https://graphql.org/img/logo.svg" alt="jet" height="30">
 </p>
 
 [![Angular](https://img.shields.io/badge/NodeJS-14.15.4-green)](https://nodejs.org/en/)
