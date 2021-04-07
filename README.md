@@ -14,6 +14,10 @@
    
       URL : http://loacalhost:9080/*
       
+   <li>Vehicle GraphQL Server</li>
+   
+      URL : http://loacalhost:3000/*
+      
 </ul>
 
 <p float="left" align="center">
