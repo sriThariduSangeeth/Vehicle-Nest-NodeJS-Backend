@@ -16,11 +16,14 @@
       
 </ul>
 
-[![Angular](https://img.shields.io/badge/NodeJS-14.15.4-green)](https://nodejs.org/en/)
+<p float="left">
 <img src="https://nodejs.org/static/images/logo.svg" alt="Node" height="27">
 <img src="https://jwt.io/img/pic_logo.svg" alt="jet" height="27">
 <img src="https://nestjs.com/img/logo_text.svg" alt="jet" height="27">
-[![Build](https://img.shields.io/npm/v/@nestjs/core.svg)](https://angular.io/)****
+</p>
+
+[![Angular](https://img.shields.io/badge/NodeJS-14.15.4-green)](https://nodejs.org/en/)
+[![Build](https://img.shields.io/npm/v/@nestjs/core.svg)](https://angular.io/)
 [![Build](https://img.shields.io/badge/Build-Passed-green)](https://angular.io/)
 
 <img src="https://raw.githubusercontent.com/acervenky/animated-github-badges/master/assets/devbadge.gif" alt="Passed" height="28">
