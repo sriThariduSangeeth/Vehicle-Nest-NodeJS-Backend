@@ -9,10 +9,11 @@ export class FileREaderProcessor {
     private readonly logger = new Logger(this.constructor.name)
     constructor(private readonly fileReaderService: FileReaderProducerService) { }
 
-    // @OnQueueActive()
-    // onActive(job: Job) {
-    //     this.logger.debug(`Processing job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`)
-    // }
+    @OnQueueActive()
+    onActive(job: Job) {
+        console.log('active statu')
+        this.logger.debug(`Processing job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`)
+    }
 
     // @OnQueueCompleted()
     // onComplete(job: Job, result: any) {
@@ -26,6 +27,7 @@ export class FileREaderProcessor {
 
     @Process('csv-job')
     OnProcess(job: Job<any>) {
+        console.log('proces statu')
         console.log(job.data);
     }
 
