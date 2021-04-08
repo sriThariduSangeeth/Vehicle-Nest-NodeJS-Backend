@@ -1,12 +1,13 @@
 import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
-import { FileReaderService } from "./file-reader.service";
+import { Job } from "bull";
+import { FileReaderProducerService } from "./file-reader.producer.service";
 
-@Processor()
-export class FileREaderProcessor{
-    
+@Processor('fileQueue')
+export class FileREaderProcessor {
+
     private readonly logger = new Logger(this.constructor.name)
-    constructor(private readonly fileReaderService: FileReaderService){}
+    constructor(private readonly fileReaderService: FileReaderProducerService) { }
 
     // @OnQueueActive()
     // onActive(job: Job) {
@@ -23,9 +24,9 @@ export class FileREaderProcessor{
     //     this.logger.error(`Failed job ${job.id} of type ${job.name}: ${error.message}`, error.stack)
     // }
 
-    // @Process('')
-    // async OnProcess(){
-
-    // }
+    @Process('csv-job')
+    OnProcess(job: Job<any>) {
+        console.log(job.data);
+    }
 
 }
