@@ -10,7 +10,8 @@ import { FileReaderModule } from './file-reader/file-reader.module';
         port: 6379,
       }
     }),
-    FileReaderModule
+    FileReaderModule,
+
   ],
   controllers: [],
   providers: [],
