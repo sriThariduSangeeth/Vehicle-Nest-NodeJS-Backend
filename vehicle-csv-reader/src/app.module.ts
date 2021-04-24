@@ -1,19 +1,10 @@
-import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
-import { FileReaderModule } from './file-reader/file-reader.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      }
-    }),
-    FileReaderModule,
-
-  ],
-  controllers: [],
-  providers: [],
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
