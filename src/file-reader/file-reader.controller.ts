@@ -15,11 +15,13 @@ export class FileReaderController {
     uploadFile(@UploadedFile() file: Express.Multer.File): string {
         this.logger.log(`upload CSV endpoint hit ${file.originalname}`);
         this.fileReaderService.FileReader(file);
-        return '';
+        return 'ok';
     }
 
     @Get('test')
     testMethod() {
-        return this.fileReaderApi.getCraftBeers();
+        console.log("hit test method");
+        // this.fileReaderApi.createNewVehicle();
+        return "";
     }
 }

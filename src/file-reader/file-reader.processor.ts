@@ -3,12 +3,14 @@ import { Logger } from "@nestjs/common";
 import { Job } from "bull";
 import * as fs from "fs";
 import * as csv from "csv-parser";
+import { Vehicle } from "src/model/vehicle";
+import { FileReaderGraphQLAPI } from "./file-reader.api";
 
 @Processor('fileQueue')
 export class FileREaderProcessor {
 
     private readonly logger = new Logger(this.constructor.name)
-    constructor() { }
+    constructor(private fileReaderGraphQLAPI: FileReaderGraphQLAPI) { }
 
     @OnQueueActive()
     onActive(job: Job) {
@@ -31,18 +33,17 @@ export class FileREaderProcessor {
     OnProcess(job: Job<any>) {
         this.logger.debug(`concum job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
 
-        const vehicle = [];
+        const vehicles = [];
 
         this.logger.log('File read by consumer.');
         fs.createReadStream(job.data.obj.path)
             .pipe(csv())
-            .on('data', (data) => vehicle.push(data))
+            .on('data', (data) => {
+                this.fileReaderGraphQLAPI.createNewVehicle(data.first_name, data.last_name, data.email, data.car_make,
+                    data.car_model, data.vin_number, data.manufactured_date);
+            })
             .on('end', () => {
-                console.log(vehicle);
-                // [
-                //   { NAME: 'Daffy Duck', AGE: '24' },
-                //   { NAME: 'Bugs Bunny', AGE: '22' }
-                // ]
+                console.log(vehicles);
             });
     }
 }
