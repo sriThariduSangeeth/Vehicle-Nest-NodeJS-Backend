@@ -4,6 +4,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { FileReaderGraphQLAPI } from './file-reader.api';
 import { FileReaderController } from './file-reader.controller';
 import { FileREaderProcessor } from './file-reader.processor';
+import { FileReaderResolver } from './file-reader.resolver';
 import { FileReaderService } from './file-reader.service';
 
 @Module({
@@ -16,6 +17,6 @@ import { FileReaderService } from './file-reader.service';
     }),
   ],
   controllers: [FileReaderController],
-  providers: [FileReaderService, FileREaderProcessor, FileReaderGraphQLAPI],
+  providers: [FileReaderService, FileREaderProcessor, FileReaderGraphQLAPI, FileReaderResolver],
 })
 export class FileReaderModule { }

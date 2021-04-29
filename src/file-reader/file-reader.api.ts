@@ -1,19 +1,40 @@
 import { Logger } from '@nestjs/common';
 // import { gql } from 'apollo-server-express';
 import gql from 'graphql-tag';
-import ApolloClient from "apollo-boost";
+import ApolloClient, { Observable } from "apollo-boost";
 import 'cross-fetch/polyfill';
+import { Vehicle } from 'src/model/vehicle';
+import { ConfigService } from '@nestjs/config';
 
 
-const GET_VEHCLE = gql`
+const GET_ALL_VEHCLE = gql`
   query {
     allVData{
         nodes{
+          id
           firstName
           lastName
           email
           carMake
+          carModel
+          vinNumber
+          manufacturedDate
         }
+    }
+  }
+  `;
+
+const GET_VEHICLE_BY_ID = gql`
+  query($id: Int!){
+    vDatumById(id: $id){
+      id
+      firstName
+      lastName
+      email
+      carMake
+      carModel
+      vinNumber
+      manufacturedDate
     }
   }
   `;
@@ -74,28 +95,52 @@ export class FileReaderGraphQLAPI {
 
   private readonly logger = new Logger(this.constructor.name);
 
+  constructor(private config: ConfigService) { }
+
+  //db_url = this.config.get('POSTGRAPHILE');
+
   client = new ApolloClient({
     uri: 'http://localhost:5000/graphql'
   });
 
+  async getAllVehicles(): Promise<Vehicle[]> {
 
-  async getVehicle() {
-    try {
-      this.client.query({
-        query: GET_VEHCLE,
-      })
-        .then(data => {
-          return data.data.allVData;
-        })
-        .catch(error => this.logger.error(error));
-    } catch (error) {
+    const response = await this.client.query({
+      query: GET_ALL_VEHCLE,
+    }).then(data => {
+      return data.data.allVData.nodes;
+    }).catch(error => {
       this.logger.error(error);
-    }
-
+      const resVe: Vehicle[] = [];
+      return resVe;
+    });
+    return response;
   }
 
+  async getVehicleById(id: number): Promise<Vehicle> {
+    const response = await this.client.query({
+      query: GET_VEHICLE_BY_ID,
+      variables: {
+        id: id
+      }
+    }).then(data => {
+      return data.data.vDatumById;
+    }).catch(error => {
+      this.logger.error(error);
+      const resVe: Vehicle = new Vehicle();
+      return resVe;
+    });
+    return response;
+  }
+
+  async getVehicleByVId(): Promise<Vehicle> {
+    //TODO
+    return
+  }
+
+
   async createNewVehicle(firstName: string, lastName: string, email: string, carMake: string, carModel: string, vinNumber: string, manufacturedDate: string) {
-    this.client.mutate({
+    const response = this.client.mutate({
       mutation: CREATE_VEHICLE,
       variables: {
         firstName: firstName,
@@ -107,9 +152,16 @@ export class FileReaderGraphQLAPI {
         manufacturedDate: manufacturedDate
       }
     })
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
+      .then(data => {
+        return data.data.vDatumById;
+      })
+      .catch(error => {
+        this.logger.error(error);
+        const resVe: Vehicle = new Vehicle();
+        return resVe;
+      });
 
+    return response;
   }
 }
 

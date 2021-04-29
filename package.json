@@ -23,6 +23,7 @@
     "dependencies": {
         "@nestjs/bull": "^0.3.1",
         "@nestjs/common": "^7.6.15",
+        "@nestjs/config": "^0.6.3",
         "@nestjs/core": "^7.6.15",
         "@nestjs/graphql": "^7.10.6",
         "@nestjs/platform-express": "^7.6.15",
@@ -32,6 +33,7 @@
         "apollo-link-http": "^1.5.17",
         "apollo-server-express": "^2.23.0",
         "bull": "^3.22.3",
+        "class-validator": "^0.13.1",
         "cross-fetch": "^3.1.4",
         "csv-parser": "^3.0.0",
         "graphql": "^15.5.0",
