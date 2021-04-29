@@ -160,9 +160,9 @@ export class FileReaderGraphQLAPI {
     const response = this.client.mutate({
       mutation: UPDATE_VEHICLE_ID,
       variables: {
-        "id": {
-          "id": updateVehicle.id,
-          "vDatumPatch": {
+        id: {
+          id: updateVehicle.id,
+          vDatumPatch: {
             firstName: updateVehicle.firstName,
             lastName: updateVehicle.lastName,
             email: updateVehicle.email,
