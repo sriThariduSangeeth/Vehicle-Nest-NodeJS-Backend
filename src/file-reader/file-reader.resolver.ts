@@ -32,7 +32,7 @@ export class FileReaderResolver {
     }
 
     @Mutation(() => Vehicle)
-    async updateVehicle(@Args('updateVehicle') updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
+    async updateVehicle(@Args('updateVehicleData') updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
         this.logger.log("update vehicle endpoint");
         return this.fileReaderService.updateVehicle(updateVehicle);
     }

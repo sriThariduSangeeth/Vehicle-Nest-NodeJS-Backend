@@ -5,6 +5,7 @@ import ApolloClient, { Observable } from "apollo-boost";
 import 'cross-fetch/polyfill';
 import { Vehicle } from 'src/model/vehicle';
 import { ConfigService } from '@nestjs/config';
+import { UpdateVehicleInput } from 'src/dto/input/update-vehicle.input';
 
 
 const GET_ALL_VEHCLE = gql`
@@ -54,6 +55,22 @@ mutation createPost($input: CreateVDatumInput!) {
   }
 }
 `;
+
+const UPDATE_VEHICLE_ID = gql`
+  mutation($id : UpdateVDatumByIdInput!){
+    updateVDatumById(input:$id){
+      vDatum{
+        firstName
+        lastName
+        email
+        carMake
+        carModel
+        vinNumber
+        manufacturedDate
+      }
+    }
+  }
+  `;
 
 const CREATE_VEHICLE = gql`
 mutation(
@@ -136,6 +153,34 @@ export class FileReaderGraphQLAPI {
   async getVehicleByVId(): Promise<Vehicle> {
     //TODO
     return
+  }
+
+  async updateVehicleById(updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
+    console.log(updateVehicle);
+    const response = this.client.mutate({
+      mutation: UPDATE_VEHICLE_ID,
+      variables: {
+        "id": {
+          "id": updateVehicle.id,
+          "vDatumPatch": {
+            firstName: updateVehicle.firstName,
+            lastName: updateVehicle.lastName,
+            email: updateVehicle.email,
+            carMake: updateVehicle.carMake,
+            carModel: updateVehicle.carModel,
+            vinNumber: updateVehicle.vinNumber,
+            manufacturedDate: updateVehicle.manufacturedDate
+          }
+        }
+      }
+    }).then(data => {
+      return data.data.updateVDatumById.vDatum;
+    }).catch(error => {
+      this.logger.error(error);
+      const resVe: Vehicle = new Vehicle();
+      return resVe;
+    });
+    return response;
   }
 
 

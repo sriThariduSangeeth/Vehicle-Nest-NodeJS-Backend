@@ -44,7 +44,7 @@ export class FileReaderService {
     }
 
     public updateVehicle(updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
-        return
+        return this.readerApi.updateVehicleById(updateVehicle);
     }
 
     public deleteVehicle(deleteVehicle: DeleteVehicleInput): Promise<Vehicle> {
