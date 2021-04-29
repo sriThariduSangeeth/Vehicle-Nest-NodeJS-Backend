@@ -7,6 +7,10 @@ import { FileREaderProcessor } from './file-reader.processor';
 import { FileReaderResolver } from './file-reader.resolver';
 import { FileReaderService } from './file-reader.service';
 
+/**
+ * @import bull module and File save Path
+ */
+
 @Module({
   imports: [
     BullModule.registerQueue({

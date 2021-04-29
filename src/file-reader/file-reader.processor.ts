@@ -27,7 +27,11 @@ export class FileREaderProcessor {
         this.logger.error(`Failed job ${job.id} of type ${job.name}: ${error.message}`, error.stack);
     }
 
-    // consume created job
+
+    /**
+     * @type Redis Job
+     * @param job Consume csv-job queue and push data into postgraphile line by line
+     */
     @Process('csv-job')
     OnProcess(job: Job<any>) {
         this.logger.debug(`concum job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
@@ -45,9 +49,5 @@ export class FileREaderProcessor {
         } catch (error) {
             this.logger.error(error);
         }
-
-        // .on('end', () => {
-        //     console.log(vehicles);
-        // });
     }
 }

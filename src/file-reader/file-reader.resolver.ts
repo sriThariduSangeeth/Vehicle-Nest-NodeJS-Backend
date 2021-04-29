@@ -14,35 +14,54 @@ export class FileReaderResolver {
 
     constructor(private readonly fileReaderService: FileReaderService) { }
 
-    //tested
+    /**
+     * @access GraphQL client
+     * @param getVehicle vehicleId or vinNumber
+     * @returns Vehicle object
+     */
     @Query(() => Vehicle, { name: 'vehicle' })
     async getVehicle(@Args() getVehicle: GetVehicleByIdArgs): Promise<Vehicle> {
         this.logger.log("Call get Vehucle by id.");
         return this.fileReaderService.getVehicle(getVehicle)
     }
 
-    //tested
+    /**
+     * @access GraphQL client
+     * @returns All Vehicle obj list
+     */
     @Query(() => [Vehicle], { name: 'vehicles', nullable: "items" })
     async getAllVehicles(): Promise<Vehicle[]> {
         this.logger.log("Call get all Vehucle.");
         return this.fileReaderService.getAllVehicles();
     }
 
-    //tested
+    /**
+     * @access GraphQL client
+     * @param createVehicle new Vehicle() 
+     * @returns new created Vehicle Obj
+     */
     @Mutation(() => Vehicle)
     async createVehicle(@Args('createVehicleData') createVehicle: CreateVehicleInput): Promise<Vehicle> {
         this.logger.log("create vehicle endpoint");
         return this.fileReaderService.cretaeVehicle(createVehicle);
     }
 
-    //tested
+    /**
+     * @access GraphQL client
+     * @param updateVehicle Vehicle ID
+     * @returns updated Vehicle obj
+     */
     @Mutation(() => Vehicle)
     async updateVehicle(@Args('updateVehicleData') updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
         this.logger.log("update vehicle endpoint");
         return this.fileReaderService.updateVehicle(updateVehicle);
     }
 
-    //tested
+    /**
+     * @access GraphQL client
+     * @param deleteVehicle Vehicle ID  
+     * @returns deleted Vehicle obj
+     */
     @Mutation(() => Vehicle)
     async deleteVehicle(@Args('deleteVehicle') deleteVehicle: DeleteVehicleInput): Promise<Vehicle> {
         this.logger.log("delete vehicle endpoint");

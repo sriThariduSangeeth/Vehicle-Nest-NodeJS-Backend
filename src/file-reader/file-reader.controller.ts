@@ -11,6 +11,12 @@ export class FileReaderController {
     constructor(private readonly fileReaderService: FileReaderService,
         private readonly fileReaderApi: FileReaderGraphQLAPI, private config: ConfigService) { }
 
+
+    /**
+     * 
+     * @param file CVS Files
+     * @returns String response
+     */
     @Post('upload')
     @UseInterceptors(FileInterceptor('uploadcsv'))
     uploadFile(@UploadedFile() file: Express.Multer.File): string {
@@ -19,6 +25,10 @@ export class FileReaderController {
         return 'ok';
     }
 
+    /**
+     * @todo this API for run test case
+     * @returns 
+     */
     @Get('test')
     testMethod() {
         console.log("hit test method");
