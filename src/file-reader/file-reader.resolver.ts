@@ -14,29 +14,35 @@ export class FileReaderResolver {
 
     constructor(private readonly fileReaderService: FileReaderService) { }
 
+    //tested
     @Query(() => Vehicle, { name: 'vehicle' })
     async getVehicle(@Args() getVehicle: GetVehicleByIdArgs): Promise<Vehicle> {
+        this.logger.log("Call get Vehucle by id.");
         return this.fileReaderService.getVehicle(getVehicle)
     }
 
+    //tested
     @Query(() => [Vehicle], { name: 'vehicles', nullable: "items" })
     async getAllVehicles(): Promise<Vehicle[]> {
         this.logger.log("Call get all Vehucle.");
         return this.fileReaderService.getAllVehicles();
     }
 
+    //tested
     @Mutation(() => Vehicle)
-    async createVehicle(@Args('createVehicle') createVehicle: CreateVehicleInput): Promise<Vehicle> {
+    async createVehicle(@Args('createVehicleData') createVehicle: CreateVehicleInput): Promise<Vehicle> {
         this.logger.log("create vehicle endpoint");
         return this.fileReaderService.cretaeVehicle(createVehicle);
     }
 
+    //tested
     @Mutation(() => Vehicle)
     async updateVehicle(@Args('updateVehicleData') updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
         this.logger.log("update vehicle endpoint");
         return this.fileReaderService.updateVehicle(updateVehicle);
     }
 
+    //tested
     @Mutation(() => Vehicle)
     async deleteVehicle(@Args('deleteVehicle') deleteVehicle: DeleteVehicleInput): Promise<Vehicle> {
         this.logger.log("delete vehicle endpoint");

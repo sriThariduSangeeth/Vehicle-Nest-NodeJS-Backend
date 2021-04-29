@@ -72,6 +72,22 @@ const UPDATE_VEHICLE_ID = gql`
   }
   `;
 
+const DELETE_VEHICLE_BY_ID = gql`
+  mutation($id : DeleteVDatumByIdInput!){
+    deleteVDatumById(input:$id){
+      vDatum{
+        firstName
+        lastName
+        email
+        carMake
+        carModel
+        vinNumber
+        manufacturedDate
+      }
+    }
+  }
+  `;
+
 const CREATE_VEHICLE = gql`
 mutation(
 	$firstName: String!
@@ -96,6 +112,7 @@ mutation(
     }
     }){
       vDatum {
+      id
       firstName
       lastName
       email
@@ -135,16 +152,21 @@ export class FileReaderGraphQLAPI {
   }
 
   async getVehicleById(id: number): Promise<Vehicle> {
+    const resVe: Vehicle = new Vehicle();
     const response = await this.client.query({
       query: GET_VEHICLE_BY_ID,
       variables: {
         id: id
       }
     }).then(data => {
-      return data.data.vDatumById;
+      this.logger.error(data);
+      if (data.data.vDatumById != null) {
+        return data.data.vDatumById;
+      }
+      return resVe;
+
     }).catch(error => {
       this.logger.error(error);
-      const resVe: Vehicle = new Vehicle();
       return resVe;
     });
     return response;
@@ -183,6 +205,23 @@ export class FileReaderGraphQLAPI {
     return response;
   }
 
+  async deleteVehicleById(vid: number): Promise<Vehicle> {
+    const response = this.client.mutate({
+      mutation: DELETE_VEHICLE_BY_ID,
+      variables: {
+        id: {
+          id: vid
+        }
+      }
+    }).then(data => {
+      return data.data.deleteVDatumById.vDatum;
+    }).catch(error => {
+      this.logger.error(error);
+      const resVe: Vehicle = new Vehicle();
+      return resVe;
+    });
+    return response;
+  }
 
   async createNewVehicle(firstName: string, lastName: string, email: string, carMake: string, carModel: string, vinNumber: string, manufacturedDate: string) {
     const response = this.client.mutate({
@@ -198,7 +237,7 @@ export class FileReaderGraphQLAPI {
       }
     })
       .then(data => {
-        return data.data.vDatumById;
+        return data.data.createVDatum.vDatum;
       })
       .catch(error => {
         this.logger.error(error);
