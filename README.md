@@ -12,11 +12,11 @@
       
    <li>CSV File Upload & CRUD Server</li>
    
-      URL : http://loacalhost:9080/*
+      URL : http://loacalhost:3000/*
       
    <li>Vehicle GraphQL Server</li>
    
-      URL : http://loacalhost:3000/*
+      URL : http://loacalhost:5000/*
       
 </ul>
 
