@@ -25,12 +25,12 @@
 
 <h2>Implemented&ensp;&ensp;:book: :book:</h2>
 
-| Server | status |
--------------------
-| vehicleCsvReader-Server | - [x] Implemet |
-| postgraphile-Server | - [x] Implemet |
-| vehicleForAuth-Server | - [x] Implemet |
-------------------------------------------
+| Server                    | status         |
+---------------------------- ----------------     
+| vehicleCsvReader-Server   | - [x] Implemet |
+| postgraphile-Server       | - [ ] Implemet |
+| vehicleForAuth-Server     | - [] Implemet  |
+---------------------------------------------
 
 <p float="left" align="center">
     <img src="https://nodejs.org/static/images/logo.svg" alt="Node" height="35">
