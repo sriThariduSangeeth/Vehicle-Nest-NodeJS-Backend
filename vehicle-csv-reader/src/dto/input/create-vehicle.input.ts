@@ -31,5 +31,5 @@ export class CreateVehicleInput {
 
     @Field()
     @IsNotEmpty()
-    manufacture: string;
+    manufacturedDate: string;
 }

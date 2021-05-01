@@ -40,7 +40,7 @@ export class FileReaderService {
 
     public cretaeVehicle(createVehicle: CreateVehicleInput): Promise<Vehicle> {
         return this.readerApi.createNewVehicle(createVehicle.firstName, createVehicle.lastName,
-            createVehicle.email, createVehicle.carMake, createVehicle.carModel, createVehicle.vinNumber, createVehicle.manufacture);
+            createVehicle.email, createVehicle.carMake, createVehicle.carModel, createVehicle.vinNumber, createVehicle.manufacturedDate);
     }
 
     public updateVehicle(updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
