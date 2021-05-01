@@ -14,11 +14,15 @@
    
       URL : http://loacalhost:3000/*
       
-   <li>Vehicle GraphQL Server</li>
+   <li>Vehicle Postgraphile Server</li>
    
       URL : http://loacalhost:5000/*
       
+     - if you install Postgraphile globle use this command in your terminal
+     - postgraphile -c "postgres:///<TABLE_NAME>" -s <SCHEMA_NAME> --watch
+      
 </ul>
+
 
 <p float="left" align="center">
     <img src="https://nodejs.org/static/images/logo.svg" alt="Node" height="35">
