@@ -27,8 +27,8 @@
 
 | **Server**                   | **status**        |
 |---------------------------|----------------|     
-| [vehicleCsvReader-Server](https://github.com/sriThariduSangeeth/Vehicle-Nest-NodeJS-Backend/tree/master/vehicle-csv-reader) | <ul><li>- [x] Implemet</li> |
-| [postgraphile-Server](https://github.com/sriThariduSangeeth/Vehicle-Nest-NodeJS-Backend/tree/master/postgraphile-server)       | <ul><li>- [x] Implemet</li> |
+| [VehicleCsvReader-Server](https://github.com/sriThariduSangeeth/Vehicle-Nest-NodeJS-Backend/tree/master/vehicle-csv-reader) | <ul><li>- [x] Implemet</li> |
+| [Postgraphile-Server](https://github.com/sriThariduSangeeth/Vehicle-Nest-NodeJS-Backend/tree/master/postgraphile-server)       | <ul><li>- [x] Implemet</li> |
 | vehicleForAuth-Server     | <ul><li>- [ ] Implemet</li> |
 
 
