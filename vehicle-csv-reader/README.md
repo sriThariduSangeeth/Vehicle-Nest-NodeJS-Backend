@@ -30,7 +30,7 @@ $ npm run start:dev
 
 ```
 
-<p>This application works as a back end serices for [Vehicle Angular Frontend](https://github.com/sriThariduSangeeth/Vehicle-Angular-Frontend.git).</p>
+<p>This application works as a back end serices for <a href="https://github.com/sriThariduSangeeth/Vehicle-Angular-Frontend.git">Vehicle Angular Frontend</a>.All introdution about queries note down with this documentation. </p>
 
 <h2>Content&ensp;&ensp;:book: :book:</h2>
 <ul>
@@ -40,6 +40,11 @@ $ npm run start:dev
     <li> - [x] Redis and Bull Queue</li>
 </ul>
 
+### Upload file API
+```bash
+#form-data key: uploadcsv
+http://localhost:<Port>/file/upload
+```
 ### Object type
 ```bash
   type Vehicle {
