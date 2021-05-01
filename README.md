@@ -29,7 +29,7 @@
 ---------------------------- ----------------     
 | vehicleCsvReader-Server   | - [x] Implemet |
 | postgraphile-Server       | - [ ] Implemet |
-| vehicleForAuth-Server     | - [] Implemet  |
+| vehicleForAuth-Server     | - [ ] Implemet  |
 ---------------------------------------------
 
 <p float="left" align="center">
