@@ -21,7 +21,7 @@ export class FileReaderResolver {
      */
     @Query(() => Vehicle, { name: 'vehicle' })
     async getVehicle(@Args() getVehicle: GetVehicleByIdArgs): Promise<Vehicle> {
-        this.logger.log("Call get Vehucle by id.");
+        this.logger.log("Call get Vehucle by id." + getVehicle.vehicleId);
         return this.fileReaderService.getVehicle(getVehicle)
     }
 

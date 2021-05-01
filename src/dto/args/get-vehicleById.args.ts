@@ -4,7 +4,7 @@ import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 @ArgsType()
 export class GetVehicleByIdArgs {
 
-    @Field({ nullable: true })
+    @Field(() => Int, { nullable: true })
     @IsNotEmpty()
     @IsNumber()
     vehicleId?: number;

@@ -1,11 +1,11 @@
 
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType, Int } from "@nestjs/graphql";
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 @InputType()
 export class UpdateVehicleInput {
 
-    @Field()
+    @Field(() => Int)
     @IsNumber()
     @IsNotEmpty()
     id: number;

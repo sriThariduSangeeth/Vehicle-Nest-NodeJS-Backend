@@ -40,26 +40,11 @@ const GET_VEHICLE_BY_ID = gql`
   }
   `;
 
-const VEHICLE = gql`
-mutation createPost($input: CreateVDatumInput!) {
-  createVDatum(input: $input) {
-    vDatum {
-      firstName
-      lastName
-      email
-      carMake
-      carModel
-      vinNumber
-      manufacturedDate
-    }
-  }
-}
-`;
-
 const UPDATE_VEHICLE_ID = gql`
   mutation($id : UpdateVDatumByIdInput!){
     updateVDatumById(input:$id){
       vDatum{
+        id
         firstName
         lastName
         email
@@ -76,6 +61,7 @@ const DELETE_VEHICLE_BY_ID = gql`
   mutation($id : DeleteVDatumByIdInput!){
     deleteVDatumById(input:$id){
       vDatum{
+        id
         firstName
         lastName
         email
@@ -142,6 +128,8 @@ export class FileReaderGraphQLAPI {
     const response = await this.client.query({
       query: GET_ALL_VEHCLE,
     }).then(data => {
+      console.log(data.data.allVData.nodes);
+
       return data.data.allVData.nodes;
     }).catch(error => {
       this.logger.error(error);
@@ -159,7 +147,6 @@ export class FileReaderGraphQLAPI {
         id: id
       }
     }).then(data => {
-      this.logger.error(data);
       if (data.data.vDatumById != null) {
         return data.data.vDatumById;
       }
@@ -178,7 +165,6 @@ export class FileReaderGraphQLAPI {
   }
 
   async updateVehicleById(updateVehicle: UpdateVehicleInput): Promise<Vehicle> {
-    console.log(updateVehicle);
     const response = this.client.mutate({
       mutation: UPDATE_VEHICLE_ID,
       variables: {
@@ -224,6 +210,7 @@ export class FileReaderGraphQLAPI {
   }
 
   async createNewVehicle(firstName: string, lastName: string, email: string, carMake: string, carModel: string, vinNumber: string, manufacturedDate: string) {
+
     const response = this.client.mutate({
       mutation: CREATE_VEHICLE,
       variables: {
@@ -234,7 +221,7 @@ export class FileReaderGraphQLAPI {
         carModel: carModel,
         vinNumber: vinNumber,
         manufacturedDate: manufacturedDate
-      }
+      },
     })
       .then(data => {
         return data.data.createVDatum.vDatum;
