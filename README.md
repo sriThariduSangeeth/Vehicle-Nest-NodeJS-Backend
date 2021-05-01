@@ -27,9 +27,9 @@
 
 | Server                    | status         |
 |---------------------------|----------------|     
-| vehicleCsvReader-Server   | - [x] Implemet |
-| postgraphile-Server       | - [x] Implemet |
-| vehicleForAuth-Server     | - [ ] Implemet |
+| vehicleCsvReader-Server   | <ul><li>- [x] Implemet</li> |
+| postgraphile-Server       | <ul><li>- [x] Implemet</li> |
+| vehicleForAuth-Server     | <ul><li>- [ ] Implemet</li> |
 
 
 <p float="left" align="center">
