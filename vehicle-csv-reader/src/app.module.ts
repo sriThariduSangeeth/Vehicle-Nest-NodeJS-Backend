@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { FileReaderModule } from './file-reader/file-reader.module';
+import { FileReaderSocketGateway } from './web-socket/file-reader-socket.gateway';
 
 @Module({
   imports: [FileReaderModule,
@@ -12,6 +13,7 @@ import { FileReaderModule } from './file-reader/file-reader.module';
     ConfigModule.forRoot({
       isGlobal: true,
     })
-  ]
+  ],
+  providers: [FileReaderSocketGateway],
 })
 export class AppModule { }

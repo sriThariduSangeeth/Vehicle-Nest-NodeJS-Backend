@@ -128,8 +128,6 @@ export class FileReaderGraphQLAPI {
     const response = await this.client.query({
       query: GET_ALL_VEHCLE,
     }).then(data => {
-      console.log(data.data.allVData.nodes);
-
       return data.data.allVData.nodes;
     }).catch(error => {
       this.logger.error(error);
