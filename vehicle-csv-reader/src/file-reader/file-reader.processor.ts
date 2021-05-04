@@ -4,12 +4,19 @@ import { Job } from "bull";
 import * as fs from "fs";
 import * as csv from "csv-parser";
 import { FileReaderGraphQLAPI } from "./file-reader.api";
+import { WebSocketServer } from "@nestjs/websockets";
+import { Server } from "socket.io";
+import { FileReaderService } from "./file-reader.service";
 
 @Processor('fileQueue')
 export class FileREaderProcessor {
 
+    @WebSocketServer()
+    private server: Server;
+
     private readonly logger = new Logger(this.constructor.name)
-    constructor(private fileReaderGraphQLAPI: FileReaderGraphQLAPI) { }
+    constructor(private fileReaderGraphQLAPI: FileReaderGraphQLAPI,
+        private fileservice: FileReaderService) { }
 
     @OnQueueActive()
     onActive(job: Job) {
@@ -20,6 +27,7 @@ export class FileREaderProcessor {
     @OnQueueCompleted()
     onComplete(job: Job, result: any) {
         this.logger.debug(`Completed job ${job.id} of type ${job.name}. Result: ${JSON.stringify(result)}`);
+        this.fileservice.fileUploadComplete(`Completed job ${job.id} of type ${job.name}.`);
     }
 
     @OnQueueFailed()
@@ -34,17 +42,18 @@ export class FileREaderProcessor {
      */
     @Process('csv-job')
     OnProcess(job: Job<any>) {
-        this.logger.debug(`concum job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
-
-        const vehicles = [];
-
+        this.logger.log(`concum job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
         this.logger.log('File read by consumer.');
         try {
+            let progress = 0;
             fs.createReadStream(job.data.obj.path)
                 .pipe(csv())
                 .on('data', (data) => {
                     this.fileReaderGraphQLAPI.createNewVehicle(data.first_name, data.last_name, data.email, data.car_make,
                         data.car_model, data.vin_number, data.manufactured_date);
+                    job.progress(progress++);
+                }).on('end', end => {
+                    this.fileservice.fileUploadComplete("Queue Process completed.");
                 });
         } catch (error) {
             this.logger.error(error);

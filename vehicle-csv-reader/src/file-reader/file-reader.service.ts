@@ -5,6 +5,7 @@ import { GetVehicleByIdArgs } from 'src/dto/args/get-vehicleById.args';
 import { CreateVehicleInput } from 'src/dto/input/create-vehicle.input';
 import { DeleteVehicleInput } from 'src/dto/input/delete-vehicle.input';
 import { UpdateVehicleInput } from 'src/dto/input/update-vehicle.input';
+import { FileReaderSocketGateway } from 'src/web-socket/file-reader-socket.gateway';
 import { Vehicle } from '../model/vehicle';
 import { FileReaderGraphQLAPI } from './file-reader.api';
 
@@ -17,14 +18,24 @@ export class FileReaderService {
         @InjectQueue('fileQueue')
         private csvQueue: Queue,
         private readerApi: FileReaderGraphQLAPI,
+        private readonly websocketGateway: FileReaderSocketGateway
     ) { }
 
     // add to the queue name : fileQueue 
     async FileReader(file: Express.Multer.File) {
         this.logger.log('message inster into queue.');
-        await this.csvQueue.add('csv-job', {
+        const job = await this.csvQueue.add('csv-job', {
             obj: file
-        })
+        }, { delay: 4000 }
+        ).then(data => {
+            this.logger.log("queue added complete");
+            return data;
+
+        }).catch(error => {
+            this.logger.error("queue added incomplete");
+            return error;
+        });
+        return job;
     }
 
     public getVehicle(getVehicle: GetVehicleByIdArgs): Promise<Vehicle> {
@@ -49,6 +60,10 @@ export class FileReaderService {
 
     public deleteVehicle(deleteVehicle: DeleteVehicleInput): Promise<Vehicle> {
         return this.readerApi.deleteVehicleById(deleteVehicle.vehicleId);
+    }
+
+    public fileUploadComplete(mess: string) {
+        return this.websocketGateway.handleMessage(mess);
     }
 
 }

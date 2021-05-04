@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 // import { gql } from 'apollo-server-express';
 import gql from 'graphql-tag';
-import ApolloClient, { Observable } from "apollo-boost";
+import ApolloClient, { DefaultOptions, InMemoryCache, Observable } from "apollo-boost";
 import 'cross-fetch/polyfill';
 import { Vehicle } from 'src/model/vehicle';
 import { ConfigService } from '@nestjs/config';
@@ -115,13 +115,33 @@ export class FileReaderGraphQLAPI {
 
   private readonly logger = new Logger(this.constructor.name);
 
-  constructor(private config: ConfigService) { }
+  client = new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: 'http://localhost:5000/graphql',
+  });
+
+  constructor(private config: ConfigService) {
+
+    this.client.defaultOptions = {
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
+      mutate: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
+    }
+  }
 
   //db_url = this.config.get('POSTGRAPHILE');
 
-  client = new ApolloClient({
-    uri: 'http://localhost:5000/graphql'
-  });
+
+
 
   async getAllVehicles(): Promise<Vehicle[]> {
 
@@ -209,7 +229,7 @@ export class FileReaderGraphQLAPI {
 
   async createNewVehicle(firstName: string, lastName: string, email: string, carMake: string, carModel: string, vinNumber: string, manufacturedDate: string) {
 
-    const response = this.client.mutate({
+    const response = await this.client.mutate({
       mutation: CREATE_VEHICLE,
       variables: {
         firstName: firstName,
