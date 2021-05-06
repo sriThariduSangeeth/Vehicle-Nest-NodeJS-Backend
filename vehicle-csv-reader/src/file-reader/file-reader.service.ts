@@ -66,4 +66,20 @@ export class FileReaderService {
         return this.websocketGateway.handleMessage(mess);
     }
 
+    async getAllVehiclesById(count: number): Promise<Vehicle[]> {
+        this.logger.log('age inster into queue.');
+        const job = await this.csvQueue.add('vehicle-age', {
+            count: count
+        }, { delay: 4000 }
+        ).then(data => {
+            this.logger.log("queue added complete");
+            return data;
+
+        }).catch(error => {
+            this.logger.error("queue added incomplete");
+            return error;
+        });
+        return job;
+    }
+
 }

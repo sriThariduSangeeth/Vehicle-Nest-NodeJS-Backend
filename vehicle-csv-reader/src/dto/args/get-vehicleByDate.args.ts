@@ -2,14 +2,11 @@ import { ArgsType, Field, Int } from "@nestjs/graphql";
 import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 @ArgsType()
-export class GetVehicleByIdArgs {
+export class GetAllVehicleByManuYearArgs {
 
-    @Field(() => Int, { nullable: true })
+    @Field()
     @IsNotEmpty()
     @IsNumber()
-    vehicleId?: number;
+    vehicleYear?: string;
 
-    @Field({ nullable: true })
-    @IsNotEmpty()
-    vinNumber?: string;
 }

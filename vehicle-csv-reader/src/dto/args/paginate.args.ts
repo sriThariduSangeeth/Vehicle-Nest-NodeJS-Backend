@@ -2,7 +2,7 @@ import { ArgsType, Field, Int } from "@nestjs/graphql";
 import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 @ArgsType()
-export class GetVehicleByIdArgs {
+export class PaginateArgs {
 
     @Field(() => Int, { nullable: true })
     @IsNotEmpty()

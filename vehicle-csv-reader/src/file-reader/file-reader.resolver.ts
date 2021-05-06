@@ -1,5 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { GetAllVehicleByAgeArgs } from "src/dto/args/get-vehicleByAge.args";
+import { GetAllVehicleByManuYearArgs } from "src/dto/args/get-vehicleByDate.args";
 import { GetVehicleByIdArgs } from "src/dto/args/get-vehicleById.args";
 import { CreateVehicleInput } from "src/dto/input/create-vehicle.input";
 import { DeleteVehicleInput } from "src/dto/input/delete-vehicle.input";
@@ -68,5 +70,17 @@ export class FileReaderResolver {
         return this.fileReaderService.deleteVehicle(deleteVehicle);
     }
 
+
+    @Query(() => [Vehicle], { name: 'getVehicleByAge', nullable: "items" })
+    public getAllVehicleByAge(@Args() getVehicleByAge: GetAllVehicleByAgeArgs): Promise<Vehicle[]> {
+        this.logger.log("get all vehicles by :" + getVehicleByAge.vehicleAge);
+        return this.fileReaderService.getAllVehiclesById(getVehicleByAge.vehicleAge);
+    }
+
+    @Query(() => [Vehicle], { name: 'getVehicleByYear', nullable: "items" })
+    public getAllVehicleByYear(@Args() getVehicleByYear: GetAllVehicleByManuYearArgs): Promise<Vehicle[]> {
+        this.logger.log("get all vehicles by :" + getVehicleByYear.vehicleYear);
+        return;
+    }
 
 }
