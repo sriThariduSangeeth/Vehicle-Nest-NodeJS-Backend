@@ -1,9 +1,30 @@
 import { Logger } from '@nestjs/common';
 import gql from 'graphql-tag';
 
+export const GET_ALL_VEHCLE_COUNT = gql`
+    query{
+        allVData{
+            totalCount
+        }
+    } 
+`;
+
 export const GET_ALL_VEHCLE = gql`
-  query {
-    allVData{
+  query (
+      $first:Int,
+      $offset:Int,
+      $last:Int
+  ){
+    allVData(
+      first:$first, 
+      offset:$offset,
+      last:$last,
+    ){
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
         nodes{
           id
           firstName

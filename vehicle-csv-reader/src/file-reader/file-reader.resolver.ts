@@ -3,9 +3,12 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GetAllVehicleByAgeArgs } from "src/dto/args/get-vehicleByAge.args";
 import { GetAllVehicleByManuYearArgs } from "src/dto/args/get-vehicleByDate.args";
 import { GetVehicleByIdArgs } from "src/dto/args/get-vehicleById.args";
+import { PaginateArgs } from "src/dto/args/paginate.args";
 import { CreateVehicleInput } from "src/dto/input/create-vehicle.input";
 import { DeleteVehicleInput } from "src/dto/input/delete-vehicle.input";
 import { UpdateVehicleInput } from "src/dto/input/update-vehicle.input";
+import { Count } from "src/model/count";
+import { PaginateVehicle } from "src/model/paginate-vehicle";
 import { Vehicle } from "../model/vehicle"
 import { FileReaderService } from "./file-reader.service";
 
@@ -29,12 +32,22 @@ export class FileReaderResolver {
 
     /**
      * @access GraphQL client
+     * @returns All Vehicle count as int
+     */
+    @Query(() => Count, { name: 'vehiclesCount' })
+    async getAllVehicleCount(): Promise<Count> {
+        this.logger.log("Call get all Vehucle count.");
+        return this.fileReaderService.getAllVehicleCount();
+    }
+
+    /**
+     * @access GraphQL client
      * @returns All Vehicle obj list
      */
-    @Query(() => [Vehicle], { name: 'vehicles', nullable: "items" })
-    async getAllVehicles(): Promise<Vehicle[]> {
+    @Query(() => PaginateVehicle, { name: 'vehicles' })
+    async getAllVehicles(@Args() painate: PaginateArgs): Promise<PaginateVehicle> {
         this.logger.log("Call get all Vehucle.");
-        return this.fileReaderService.getAllVehicles();
+        return this.fileReaderService.getAllVehicles(painate);
     }
 
     /**

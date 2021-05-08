@@ -7,9 +7,16 @@ export class PaginateArgs {
     @Field(() => Int, { nullable: true })
     @IsNotEmpty()
     @IsNumber()
-    vehicleId?: number;
+    first?: number;
 
-    @Field({ nullable: true })
+    @Field(() => Int, { nullable: true })
     @IsNotEmpty()
-    vinNumber?: string;
+    @IsNumber()
+    offset?: number;
+
+    @Field(() => Int, { nullable: true })
+    @IsNotEmpty()
+    @IsNumber()
+    last?: number;
+
 }

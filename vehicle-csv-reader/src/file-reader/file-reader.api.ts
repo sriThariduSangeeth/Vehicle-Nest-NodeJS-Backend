@@ -6,8 +6,11 @@ import 'cross-fetch/polyfill';
 import { Vehicle } from 'src/model/vehicle';
 import { ConfigService } from '@nestjs/config';
 import { UpdateVehicleInput } from 'src/dto/input/update-vehicle.input';
-import { GET_ALL_VEHCLE, GET_VEHICLE_BY_ID } from 'src/gql/queries/vehicle-queries';
+import { GET_ALL_VEHCLE, GET_ALL_VEHCLE_COUNT, GET_VEHICLE_BY_ID } from 'src/gql/queries/vehicle-queries';
 import { CREATE_VEHICLE, DELETE_VEHICLE_BY_ID, UPDATE_VEHICLE_ID } from 'src/gql/mutation/vehicle-mutation';
+import { Count } from 'src/model/count';
+import { PaginateArgs } from 'src/dto/args/paginate.args';
+import { PaginateVehicle } from 'src/model/paginate-vehicle';
 
 export class FileReaderGraphQLAPI {
 
@@ -18,7 +21,13 @@ export class FileReaderGraphQLAPI {
     uri: 'http://localhost:5000/graphql',
   });
 
+  db_url: string;
+
   constructor(private config: ConfigService) {
+
+    // this.db_url = this.config.get('POSTGRAPHILE');
+    // console.log(this.db_url);
+
 
     this.client.defaultOptions = {
       watchQuery: {
@@ -36,20 +45,41 @@ export class FileReaderGraphQLAPI {
     }
   }
 
-  //db_url = this.config.get('POSTGRAPHILE');
+
+
+  async getTotalVehicleCount(): Promise<Count> {
+
+    const response = await this.client.query({
+      query: GET_ALL_VEHCLE_COUNT
+    }).then(data => {
+      return data.data.allVData;
+    }).catch(error => {
+      this.logger.error(error);
+      return 0;
+    });
+
+    return response;
+  }
 
 
 
-
-  async getAllVehicles(): Promise<Vehicle[]> {
+  async getAllVehicles(painate: PaginateArgs): Promise<PaginateVehicle> {
 
     const response = await this.client.query({
       query: GET_ALL_VEHCLE,
+      variables: painate
     }).then(data => {
-      return data.data.allVData.nodes;
+      const res: PaginateVehicle = {
+        totalCount: data.data.allVData.totalCount,
+        vehicles: data.data.allVData.nodes
+      };
+      return res;
     }).catch(error => {
       this.logger.error(error);
-      const resVe: Vehicle[] = [];
+      const resVe: PaginateVehicle = {
+        totalCount: 0,
+        vehicles: []
+      };
       return resVe;
     });
     return response;

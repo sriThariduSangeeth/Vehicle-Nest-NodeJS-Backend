@@ -2,9 +2,12 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable, Logger } from '@nestjs/common';
 import { Queue } from 'bull';
 import { GetVehicleByIdArgs } from 'src/dto/args/get-vehicleById.args';
+import { PaginateArgs } from 'src/dto/args/paginate.args';
 import { CreateVehicleInput } from 'src/dto/input/create-vehicle.input';
 import { DeleteVehicleInput } from 'src/dto/input/delete-vehicle.input';
 import { UpdateVehicleInput } from 'src/dto/input/update-vehicle.input';
+import { Count } from 'src/model/count';
+import { PaginateVehicle } from 'src/model/paginate-vehicle';
 import { FileReaderSocketGateway } from 'src/web-socket/file-reader-socket.gateway';
 import { Vehicle } from '../model/vehicle';
 import { FileReaderGraphQLAPI } from './file-reader.api';
@@ -45,8 +48,12 @@ export class FileReaderService {
         return this.readerApi.getVehicleByVId();
     }
 
-    public getAllVehicles(): Promise<Vehicle[]> {
-        return this.readerApi.getAllVehicles();
+    public getAllVehicleCount(): Promise<Count> {
+        return this.readerApi.getTotalVehicleCount();
+    }
+
+    public getAllVehicles(painate: PaginateArgs): Promise<PaginateVehicle> {
+        return this.readerApi.getAllVehicles(painate);
     }
 
     public cretaeVehicle(createVehicle: CreateVehicleInput): Promise<Vehicle> {
