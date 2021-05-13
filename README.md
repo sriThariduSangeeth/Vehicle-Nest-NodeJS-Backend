@@ -65,5 +65,5 @@
 <!-- image -->
 <p align="center">
 <img src="./assest/archi.png"
-alt="App Screenshots" height="400" width="880">
+alt="App Screenshots" height="600" width="880">
 </P>
