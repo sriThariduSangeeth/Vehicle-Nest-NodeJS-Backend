@@ -14,7 +14,7 @@ export class FileREaderProcessor {
 
     @OnQueueActive()
     onActive(job: Job) {
-        console.log('active statu')
+        console.log('active statu');
         this.logger.debug(`Processing job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
     }
 
@@ -35,12 +35,9 @@ export class FileREaderProcessor {
      */
     @Process('csv-job')
     OnProcess(job: Job<any>) {
-        console.log("consum");
-
+        this.logger.log("consum job ---> CSV-JOB");
         this.logger.debug(`concum job ${job.id} of type ${job.name}. Data: ${JSON.stringify(job.data)}`);
-
         const vehicles = [];
-
         this.logger.log('File read by consumer.');
         try {
 

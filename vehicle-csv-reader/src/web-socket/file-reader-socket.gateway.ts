@@ -11,9 +11,8 @@ export class FileReaderSocketGateway implements OnGatewayInit, OnGatewayConnecti
 
     private logger: Logger = new Logger('FileReaderSocketGateway');
 
-    constructor() {
+    constructor() { }
 
-    }
     handleDisconnect(client: any) {
         this.logger.error("Socket Disconnected");
     }
