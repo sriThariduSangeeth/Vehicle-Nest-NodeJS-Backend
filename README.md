@@ -61,3 +61,9 @@
   </a>
 </p>
 
+<h4 align="center">Here is a screenshot of the Architecture Design</h4>
+<!-- image -->
+<p align="center">
+<img src="./assest/archi.png"
+alt="App Screenshots" height="400" width="880">
+</P>
